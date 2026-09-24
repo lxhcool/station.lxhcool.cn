@@ -1,0 +1,411 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: 'SquareDotMatrix';
+  src: url('data:font/woff;charset=utf-8;base64,d09GRgABAAAAAA0UAAoAAAABE5gAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAABPUy8yAAABZAAAADMAAABgSANFG2NtYXAAAAHIAAAAcwAAAJoApATEZ2x5ZgAAAqgAAAgNAAEKwqJI6GhoZWFkAAAA9AAAADYAAAA2LkBDIGhoZWEAAAEsAAAAHwAAACQElwD4aG10eAAAAZgAAAAuAAAA0ENOBiFsb2NhAAACPAAAAGoAAABqt/V4j21heHAAAAFMAAAAGAAAACABBAM+bmFtZQAACrgAAAGPAAADTjZkLrhwb3N0AAAMSAAAAMwAAAIibFYxggABAAAAAQAALAK7sV8PPPUAAwPoAAAAAObafvMAAAAA5tqA6QAUAF8BYQIFAAAAAwACAAAAAAAAeJxjYGRgYFb4b8HAwFjOIMIgwpjIABRBASYAP3YCkwB4nGNgZGBgMGG2YTjPAAJMDGgAAB6gAUZ4nGNgZkxmnMDAysDCQBgwInPsgQBIKfyXYlb4b8HAwKzAcAImx8zEzASSY2AAANrOBacAeJxjLGcwZ9jDwMCYzCADxFFQesAxQxSDCBjPYBBhDELCUDkk90YhywEAHfganwAAeJxjYGBgYmBgYAZiESDJCKZZGNqAtBSDAFCEi0GRQZlBlUGTQZ/BksGKwZbBniGKIf6/1P//QDUKYDkNBm0GA6icI1xOgIEdCBn+X/r/5v+X/+//n/5/mZEHaIMUAwSIMaADRgZdoEkaQLvUGbQAe5kYWwAAAAR8BHwIMQonDOMP0RKNFd4ZLxtWHqch+CV8KWMr7i9yMvQ1sDkzPIY/c0HMRIhGr0o0TblQ2lPIVxpanV2LX7JiomUuaIFrDG0Cb+9wvHElccByvnQgdeR40noCe8Z9J36IgH6BfIVhAAB4nO1dMUgfZxR/712DAdsINSCAQcDDlKESOsgxCGQDA6hzZBiBmkdMqSQQigZAs2QgoODKdLaIsFSBwchDgYcHBwcHBwcLMkgNEMKGTJkyOAQaPo3zVBQv355fffuvbuXJuXj7t13393/7vf7fe+97x1swxCM45d0DApog3bogE7ogm7ogV7og34YgMGWxTCMwHm4CKNwCS7DFbgK4zAB1+A63ICbcAtuwx24C5MwBdMwA7MwB/OwAIuwBMuwAquwBuuwAZuwBduwA49hF57AU3gGz+EFvIQ9eAWvscA2bMcO7MQu7MYe7MU+7McBHMQhHMYRPI8XcRQv4WW8gldxHCfwGl7HG3gTb+FtvIN3cRKncBpncBbncB4XcBGXcBlXcBXXcB03cBO3cBt38DHu4hN8is/wOb7Al7iHr/A1FdRG7dRBndRF3dRDvdRH/TRAgzREwzRC5+kijdIlukxX6CqN0wRdo+t0g27SLbpNd+guTdIUTdMMzdIczdMCLdISLdMKrdIardMGbdIWbdMOPaZdekJP6Rk9pxf0kvboFb0uiqKtaC86is6iq+oreoq/oLwaKwWKoGAboHPykt+vtv74j2l3GbI4Z6yfOZacfTZuhEyc+fPP3zIHGR4q7/vrz6H2/8w77grXLe4/Mm6X5W+POif0/7/3r/2eFtnwjZGP/KF7POVtayuR0S/dcCN1Tju7R1SttDrktzqXzm+bYjEmj/x/i3PUTaxy6tJwYSGL4TKJP3GJVxg42/g+mHWv9N47HfTJtHo9JYVVOP9ZspDD456PfzK9Y77NmgzfCdwMj3isqtSXrVYfvQlXjnk/taw1XNLFHysaIjuQBlfguB+4W+5iah7uTgbuHeTN8Rk08omPOeKxFDk7bgK5EQ3yOyxuGqk9dzHFeHiZron1o6nfQ1Jpa2GM/1hghx+aRtPb89ehdCb9nAooTvk1NAE/sStyoREPMB1GeTXnMAPBL4C43QuhTd+foU4/aXAqtQ78fuiuljnkNI7MPn7KfB/dSZKM6NQiGqhFD1ZV9pMYTeSXuaUg+K8ZBfog1PirP5hCGmqgXQ9ljDSnE82hjRP8nGuIhVV7DnLbmbQm960XvNlnzNfnajeS/WFGMvkdfcT50tXnMTL0bDBUMZR6lpcaTY2MtZhAMlbuL1/AQM7AWoFaNGfwWDCW37rXZnGUN2z1eu1Q/vnnNStGGEoYvf1hNWK/aEcLD4EHdulf2YifBp3F//o+NZvypvnRc3ysrMWGgPBuP4wH4tnlsbo9PNTPYpGw070+Oje+MMV7DwTrxHOyytk4cwtfn19eXY1NXfV7XfqRsGjnvcHGYJ7qqh00WEQYP1poHpTDc45yiyXMlI/nfvhfeGBlhrAyVPNchHBhVZNQrMwZ32eGu4IrKuKLR+B1zj3rPPeqKzdZ8Z9buj+84TaLOmYfEOc00+Fj1LzH7iHVRBtZFWcN0a3EVj9cu1U9iftTMyIsZsiszS9waT1Q7wqiiH1X07dtYu89GPGuJqs6ajcQwGh0zqTj68XXdkd3eSlRrmGitn8T37jSLvCca4iXvE0fxcFNsKaQUPIlJ0YjXysZrrfmho5+0jbw/ggdZCU85D7ISKM07F++6PHkOVIG3kRVrrem5Bs6V7Tcqnr+6nHdG9ofJ7A9rkSfN8Xg8l7V+5NVpAgt5yRqpkyV6TOzS7bF+gbScLeUVveUdJefPCCZsPBPGueycyyUTJlwd3ukucWlmMlFKZMJ6HJXHhPeCCfOY0F5M0yNCW+tH029X36q4Zg5r4mdHKv7ISOQpeslTrCunaN4fKZtGVk1q0Opga7ns8Y1DvyulmoztHr1ZMaeo8DBVZxgv6SoxjppMNzR7jliOzVhOMJuv+2Otn5ghlXxlnhJ8rZGgtfGEF86NF06qRpPmmKVw3xp3OqibpJnnnGjUpc64VL616qczGrkKxCO+ebSJigmZjZpUMQilWLZStOZpqGs/mirZe0UyM4dVk6FjzUFeZj5OfH3SADbVtR9NL3Fg7juAZ8Kbmyjy0CDwjFwWC7ks1vDMY36JtXNJcYJ3vPewsovXI493zJGL/aNCvZtAPU2Vq3kuzXuoiubiwphXGE01j6RieFVNbxjzjIqBb1o2vjFHvGEOISI+ZSE+pWljDSE0FZmmjZEofqLBE1u8XYlGfPdAQNfxtsAZOAn34QJuiiG7uXqyJzXp/ceMH+9Bhg3Ah61fZhwutLgw55eBoUrv1v2cS+p+c0Xf4wfMZ03sGnNsPpdG1F3Wiw7wMZzEU3gOR0vUXi51TOJJVWWUU+Wh88j+G4PnKtfdgMYwXdMG35eGAk1xVXGhbIDP9hVGC7/kFEZpc0dd7WINT6Wu6x7rOTXyXTReznOW7NP8Bmb4cGz6cKzlAHj0z2jeQ54Ph1mGllefQlyCJBryleZ5ZW1LrMnBQ9fy1rDlHAWf/uMrUMZ2c54ejx4jXqNEVf/g4OPV0vButIPPGl/W3gAjNaw0uU21zhPzRRyBsdZ7eLzy99Al8ku9848UH8pEw+V303w9wZos4RrdeQ3e21L1Ezz2Nh7jwJ9ZZt6bpo21GjU5NkaiU6pFYlK8c9BDelZoy4PSet6Pve7H3+CHMmOvQ8aeXEdP93h5Pz089DPntbY28WANU5qiaZqhWZqjeVqgRVqiZVqhVVqjddqgTdqibTlu0pyVW3sz49rt9JPQ2bxKn7x1LpqIzMvAdz143u+luhCAt6UeZ4e/AXVW1WwAAAB4nJ1RwUrDQBSc1apYsFdBRNd7G9IeRBAUpEdFUBG8CEsSYzDZxOwG9Av8Cb/Bgwe/xy/wG5xsFqwFBU1J37z3ZmZnCYABXiDQPgLr7r99FrDCrsOL2MGWxz1s49DjJazh2uNlbOLO4z6u8ESV6K1yEuDd4wUMxMDjRRyJTY97OBDXHi9hQzx7vIw98eZxH6/i4/y+UXUip6WVJ8rW2YO8yNJbe5akTa7qbstlt3Orkd/tT8LJ7g9y6TmXSW2yUstxMA7D38xO6yzNtMql6QxjGhadYZyZKleP8qbUNpBT8qwZyqaqkjpSJpHHymZ6KJWOZVQWBU+rGh3ZhuNSBzjHPRoo1EggMUUJy3rCieUswwO7C9YUt5yckZWSnzvFrLZTzuq+VKM53T4mCPnu/vF0Oedzya6G4b6E5nbMLz+mc/jvZKeOkfLV7HN6mm8JY5+w+JYwZjWonMcj+xuXxzJNe6fOz5IxZN+QV7ncEdnGuR47t/bMlqFYY9aILgV/3d0qKjVn1qWx/s7BJ846rucAeJx9kDViBDEQwFYXuDAzXZhhb+wJlMG/pEmX/6c4bRs3KmxLYze95v9Vm4YeY4wzwSR9pphmhlnmmGeBRZZYZoVV1lhng0222GaHXfbY54ABhxxxzAmnnHHOBZdccc0Nt9xxzwMtQ4JC7f/+fLdttCOWjkMZskjPl5SP8kk+y5cRq56qp+qpeqqeqqfqqXpq53mVb/JdfshP+TVi+o60n/bTftpP+2k/7af9tJ/2iwx74RzhHGE/nDP0R/ef3b7+0F+8n91++QNvDXIl') format('woff'),
+       url('../assets/fonts/Square_Dot_Matrix_Tight.woff') format('woff'),
+       url('../assets/fonts/Square_Dot_Matrix_Tight.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SquareDotMatrix';
+  src: url('data:font/woff;charset=utf-8;base64,d09GRgABAAAAAA0UAAoAAAABE5gAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAABPUy8yAAABZAAAADMAAABgSANFG2NtYXAAAAHIAAAAcwAAAJoApATEZ2x5ZgAAAqgAAAgNAAEKwqJI6GhoZWFkAAAA9AAAADYAAAA2LkBDIGhoZWEAAAEsAAAAHwAAACQElwD4aG10eAAAAZgAAAAuAAAA0ENOBiFsb2NhAAACPAAAAGoAAABqt/V4j21heHAAAAFMAAAAGAAAACABBAM+bmFtZQAACrgAAAGPAAADTjZkLrhwb3N0AAAMSAAAAMwAAAIibFYxggABAAAAAQAALAK7sV8PPPUAAwPoAAAAAObafvMAAAAA5tqA6QAUAF8BYQIFAAAAAwACAAAAAAAAeJxjYGRgYFb4b8HAwFjOIMIgwpjIABRBASYAP3YCkwB4nGNgZGBgMGG2YTjPAAJMDGgAAB6gAUZ4nGNgZkxmnMDAysDCQBgwInPsgQBIKfyXYlb4b8HAwKzAcAImx8zEzASSY2AAANrOBacAeJxjLGcwZ9jDwMCYzCADxFFQesAxQxSDCBjPYBBhDELCUDkk90YhywEAHfganwAAeJxjYGBgYmBgYAZiESDJCKZZGNqAtBSDAFCEi0GRQZlBlUGTQZ/BksGKwZbBniGKIf6/1P//QDUKYDkNBm0GA6icI1xOgIEdCBn+X/r/5v+X/+//n/5/mZEHaIMUAwSIMaADRgZdoEkaQLvUGbQAe5kYWwAAAAR8BHwIMQonDOMP0RKNFd4ZLxtWHqch+CV8KWMr7i9yMvQ1sDkzPIY/c0HMRIhGr0o0TblQ2lPIVxpanV2LX7JiomUuaIFrDG0Cb+9wvHElccByvnQgdeR40noCe8Z9J36IgH6BfIVhAAB4nO1dMUgfZxR/712DAdsINSCAQcDDlKESOsgxCGQDA6hzZBiBmkdMqSQQigZAs2QgoODKdLaIsFSBwchDgYcHBwcHBwcLMkgNEMKGTJkyOAQaPo3zVBQv355fffuvbuXJuXj7t13393/7vf7fe+97x1swxCM45d0DApog3bogE7ogm7ogV7og34YgMGWxTCMwHm4CKNwCS7DFbgK4zAB1+A63ICbcAtuwx24C5MwBdMwA7MwB/OwAIuwBMuwAquwBuuwAZuwBduwA49hF57AU3gGz+EFvIQ9eAWvscA2bMcO7MQu7MYe7MU+7McBHMQhHMYRPI8XcRQv4WW8gldxHCfwGl7HG3gTb+FtvIN3cRKncBpncBbncB4XcBGXcBlXcBXXcB03cBO3cBt38DHu4hN8is/wOb7Al7iHr/A1FdRG7dRBndRF3dRDvdRH/TRAgzREwzRC5+kijdIlukxX6CqN0wRdo+t0g27SLbpNd+guTdIUTdMMzdIczdMCLdISLdMKrdIardMGbdIWbdMOPaZdekJP6Rk9pxf0kvboFb0uiqKtaC86is6iq+oreoq/oLwaKwWKoGAboHPykt+vtv74j2l3GbI4Z6yfOZacfTZuhEyc+fPP3zIHGR4q7/vrz6H2/8w77grXLe4/Mm6X5W+POif0/7/3r/2eFtnwjZGP/KF7POVtayuR0S/dcCN1Tju7R1SttDrktzqXzm+bYjEmj/x/i3PUTaxy6tJwYSGL4TKJP3GJVxg42/g+mHWv9N47HfTJtHo9JYVVOP9ZspDD456PfzK9Y77NmgzfCdwMj3isqtSXrVYfvQlXjnk/taw1XNLFHysaIjuQBlfguB+4W+5iah7uTgbuHeTN8Rk08omPOeKxFDk7bgK5EQ3yOyxuGqk9dzHFeHiZron1o6nfQ1Jpa2GM/1hghx+aRtPb89ehdCb9nAooTvk1NAE/sStyoREPMB1GeTXnMAPBL4C43QuhTd+foU4/aXAqtQ78fuiuljnkNI7MPn7KfB/dSZKM6NQiGqhFD1ZV9pMYTeSXuaUg+K8ZBfog1PirP5hCGmqgXQ9ljDSnE82hjRP8nGuIhVV7DnLbmbQm960XvNlnzNfnajeS/WFGMvkdfcT50tXnMTL0bDBUMZR6lpcaTY2MtZhAMlbuL1/AQM7AWoFaNGfwWDCW37rXZnGUN2z1eu1Q/vnnNStGGEoYvf1hNWK/aEcLD4EHdulf2YifBp3F//o+NZvypvnRc3ysrMWGgPBuP4wH4tnlsbo9PNTPYpGw070+Oje+MMV7DwTrxHOyytk4cwtfn19eXY1NXfV7XfqRsGjnvcHGYJ7qqh00WEQYP1poHpTDc45yiyXMlI/nfvhfeGBlhrAyVPNchHBhVZNQrMwZ32eGu4IrKuKLR+B1zj3rPPeqKzdZ8Z9buj+84TaLOmYfEOc00+Fj1LzH7iHVRBtZFWcN0a3EVj9cu1U9iftTMyIsZsiszS9waT1Q7wqiiH1X07dtYu89GPGuJqs6ajcQwGh0zqTj68XXdkd3eSlRrmGitn8T37jSLvCca4iXvE0fxcFNsKaQUPIlJ0YjXysZrrfmho5+0jbw/ggdZCU85D7ISKM07F++6PHkOVIG3kRVrrem5Bs6V7Tcqnr+6nHdG9ofJ7A9rkSfN8Xg8l7V+5NVpAgt5yRqpkyV6TOzS7bF+gbScLeUVveUdJefPCCZsPBPGueycyyUTJlwd3ukucWlmMlFKZMJ6HJXHhPeCCfOY0F5M0yNCW+tH029X36q4Zg5r4mdHKv7ISOQpeslTrCunaN4fKZtGVk1q0Opga7ns8Y1DvyulmoztHr1ZMaeo8DBVZxgv6SoxjppMNzR7jliOzVhOMJuv+2Otn5ghlXxlnhJ8rZGgtfGEF86NF06qRpPmmKVw3xp3OqibpJnnnGjUpc64VL616qczGrkKxCO+ebSJigmZjZpUMQilWLZStOZpqGs/mirZe0UyM4dVk6FjzUFeZj5OfH3SADbVtR9NL3Fg7juAZ8Kbmyjy0CDwjFwWC7ks1vDMY36JtXNJcYJ3vPewsovXI493zJGL/aNCvZtAPU2Vq3kuzXuoiubiwphXGE01j6RieFVNbxjzjIqBb1o2vjFHvGEOISI+ZSE+pWljDSE0FZmmjZEofqLBE1u8XYlGfPdAQNfxtsAZOAn34QJuiiG7uXqyJzXp/ceMH+9Bhg3Ah61fZhwutLgw55eBoUrv1v2cS+p+c0Xf4wfMZ03sGnNsPpdG1F3Wiw7wMZzEU3gOR0vUXi51TOJJVWWUU+Wh88j+G4PnKtfdgMYwXdMG35eGAk1xVXGhbIDP9hVGC7/kFEZpc0dd7WINT6Wu6x7rOTXyXTReznOW7NP8Bmb4cGz6cKzlAHj0z2jeQ54Ph1mGllefQlyCJBryleZ5ZW1LrMnBQ9fy1rDlHAWf/uMrUMZ2c54ejx4jXqNEVf/g4OPV0vButIPPGl/W3gAjNaw0uU21zhPzRRyBsdZ7eLzy99Al8ku9848UH8pEw+V303w9wZos4RrdeQ3e21L1Ezz2Nh7jwJ9ZZt6bpo21GjU5NkaiU6pFYlK8c9BDelZoy4PSet6Pve7H3+CHMmOvQ8aeXEdP93h5Pz089DPntbY28WANU5qiaZqhWZqjeVqgRVqiZVqhVVqjddqgTdqibTlu0pyVW3sz49rt9JPQ2bxKn7x1LpqIzMvAdz143u+luhCAt6UeZ4e/AXVW1WwAAAB4nJ1RwUrDQBSc1apYsFdBRNd7G9IeRBAUpEdFUBG8CEsSYzDZxOwG9Av8Cb/Bgwe/xy/wG5xsFqwFBU1J37z3ZmZnCYABXiDQPgLr7r99FrDCrsOL2MGWxz1s49DjJazh2uNlbOLO4z6u8ESV6K1yEuDd4wUMxMDjRRyJTY97OBDXHi9hQzx7vIw98eZxH6/i4/y+UXUip6WVJ8rW2YO8yNJbe5akTa7qbstlt3Orkd/tT8LJ7g9y6TmXSW2yUstxMA7D38xO6yzNtMql6QxjGhadYZyZKleP8qbUNpBT8qwZyqaqkjpSJpHHymZ6KJWOZVQWBU+rGh3ZhuNSBzjHPRoo1EggMUUJy3rCieUswwO7C9YUt5yckZWSnzvFrLZTzuq+VKM53T4mCPnu/vF0Oedzya6G4b6E5nbMLz+mc/jvZKeOkfLV7HN6mm8JY5+w+JYwZjWonMcj+xuXxzJNe6fOz5IxZN+QV7ncEdnGuR47t/bMlqFYY9aILgV/3d0qKjVn1qWx/s7BJ846rucAeJx9kDViBDEQwFYXuDAzXZhhb+wJlMG/pEmX/6c4bRs3KmxLYze95v9Vm4YeY4wzwSR9pphmhlnmmGeBRZZYZoVV1lhng0222GaHXfbY54ABhxxxzAmnnHHOBZdccc0Nt9xxzwMtQ4JC7f/+fLdttCOWjkMZskjPl5SP8kk+y5cRq56qp+qpeqqeqqfqqXpq53mVb/JdfshP+TVi+o60n/bTftpP+2k/7af9tJ/2iwx74RzhHGE/nDP0R/ef3b7+0F+8n91++QNvDXIl') format('woff'),
+       url('../assets/fonts/Square_Dot_Matrix_Tight.woff') format('woff'),
+       url('../assets/fonts/Square_Dot_Matrix_Tight.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  height: 100svh;
+  overflow: hidden;
+  color: #fff;
+  background: #12141c;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* 官方专属：艺术级多重柔光氛围极光背景 (纯 GPU 硬件加速慢流光) */
+.ambient-container {
+  position: fixed;
+  inset: -25%;
+  z-index: -2;
+  overflow: hidden;
+  background: #13151f;
+  filter: blur(85px) saturate(1.15);
+  pointer-events: none;
+  transform: translateZ(0);
+}
+
+.ambient-blob {
+  position: absolute;
+  border-radius: 9999px;
+  will-change: transform;
+  pointer-events: none;
+}
+
+/* 1. 暖桃红木光团 (左上方) */
+.ambient-blob-1 {
+  top: 8%;
+  left: 6%;
+  width: 58vw;
+  height: 58vw;
+  background: radial-gradient(circle, #7e4854 0%, rgba(126, 72, 84, 0.05) 65%, transparent 75%);
+  animation: ambientDrift1 34s ease-in-out infinite alternate;
+}
+
+/* 2. 晚霞金褐光团 (右上方) */
+.ambient-blob-2 {
+  top: 4%;
+  right: 5%;
+  width: 54vw;
+  height: 54vw;
+  background: radial-gradient(circle, #927566 0%, rgba(146, 117, 102, 0.05) 65%, transparent 75%);
+  animation: ambientDrift2 40s ease-in-out infinite alternate;
+}
+
+/* 3. 暮光青紫光团 (左下方) */
+.ambient-blob-3 {
+  bottom: 6%;
+  left: 8%;
+  width: 60vw;
+  height: 60vw;
+  background: radial-gradient(circle, #3e445e 0%, rgba(62, 68, 94, 0.05) 65%, transparent 75%);
+  animation: ambientDrift3 44s ease-in-out infinite alternate;
+}
+
+/* 4. 静谧靛蓝灰光团 (右下方) */
+.ambient-blob-4 {
+  bottom: 4%;
+  right: 8%;
+  width: 56vw;
+  height: 56vw;
+  background: radial-gradient(circle, #343c52 0%, rgba(52, 60, 82, 0.05) 65%, transparent 75%);
+  animation: ambientDrift4 36s ease-in-out infinite alternate;
+}
+
+@keyframes ambientDrift1 {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
+  }
+  50% {
+    transform: translate3d(7vw, 9vh, 0) scale(1.1) rotate(15deg);
+  }
+  100% {
+    transform: translate3d(12vw, 4vh, 0) scale(0.96) rotate(-10deg);
+  }
+}
+
+@keyframes ambientDrift2 {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
+  }
+  50% {
+    transform: translate3d(-8vw, 10vh, 0) scale(1.12) rotate(-20deg);
+  }
+  100% {
+    transform: translate3d(-5vw, 5vh, 0) scale(0.94) rotate(14deg);
+  }
+}
+
+@keyframes ambientDrift3 {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
+  }
+  50% {
+    transform: translate3d(10vw, -7vh, 0) scale(1.08) rotate(-14deg);
+  }
+  100% {
+    transform: translate3d(5vw, -12vh, 0) scale(1.12) rotate(18deg);
+  }
+}
+
+@keyframes ambientDrift4 {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
+  }
+  50% {
+    transform: translate3d(-9vw, -8vh, 0) scale(0.95) rotate(16deg);
+  }
+  100% {
+    transform: translate3d(-6vw, -4vh, 0) scale(1.08) rotate(-12deg);
+  }
+}
+
+/* 柔光遮罩与压暗层 */
+.ambient-shade {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: rgba(12, 14, 20, 0.25);
+}
+
+/* ========================================================
+   顶级极简柔光玻璃（Soft Glass）- 摒弃一切厚重发白的高光线，通透纯粹
+   ======================================================== */
+
+/* 1. 经典柔光玻璃胶囊（按指定参数：20% 白色，4px 模糊，无边框） */
+.soft-glass-search {
+  background: rgb(255 255 255 / 20%);
+  -webkit-backdrop-filter: blur(4px) saturate(150%);
+  backdrop-filter: blur(4px) saturate(150%);
+  border: none;
+  box-shadow: 0 10px 30px -4px rgba(0, 0, 0, 0.25);
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.soft-glass-search:hover {
+  background: rgb(255 255 255 / 25%);
+  -webkit-backdrop-filter: blur(4px) saturate(150%);
+  backdrop-filter: blur(4px) saturate(150%);
+  border: none;
+  box-shadow: 0 12px 34px -4px rgba(0, 0, 0, 0.3);
+}
+
+.soft-glass-search-focus {
+  background: rgb(255 255 255 / 28%) !important;
+  -webkit-backdrop-filter: blur(6px) saturate(160%) !important;
+  backdrop-filter: blur(6px) saturate(160%) !important;
+  border: none !important;
+  box-shadow: 0 16px 40px -4px rgba(0, 0, 0, 0.32) !important;
+}
+
+/* 2. 快捷书签图标柔光卡座 (轻盈无厚边) */
+.soft-glass-icon-box {
+  width: 56px;
+  height: 56px;
+  border-radius: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.09);
+  backdrop-filter: blur(20px) saturate(135%);
+  -webkit-backdrop-filter: blur(20px) saturate(135%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 
+    0 6px 18px -2px rgba(0, 0, 0, 0.18),
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.1);
+  transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.soft-glass-icon-box:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.22);
+  box-shadow: 
+    0 10px 24px -2px rgba(0, 0, 0, 0.25),
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.14);
+  transform: translateY(-2px);
+}
+
+.soft-glass-icon-box:active {
+  transform: translateY(0) scale(0.96);
+}
+
+/* 3. 悬浮柔光按钮与顶部微胶囊 (极细微边缘) */
+.soft-glass-btn {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.11);
+  box-shadow: 
+    0 4px 12px rgba(0, 0, 0, 0.12),
+    inset 0 1px 1px rgba(255, 255, 255, 0.08);
+  transition: all 0.2s ease;
+}
+
+.soft-glass-btn:hover {
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 
+    0 6px 16px rgba(0, 0, 0, 0.18);
+  transform: translateY(-1px);
+}
+
+.soft-glass-btn:active {
+  transform: translateY(0.5px) scale(0.97);
+}
+
+/* 4. 柔光玻璃弹出层 (干净通透，不发白) */
+.soft-glass-dropdown {
+  position: absolute !important;
+  background: rgba(18, 22, 34, 0.88) !important;
+  backdrop-filter: blur(36px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(36px) saturate(180%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+  box-shadow: 
+    0 24px 50px -10px rgba(0, 0, 0, 0.6),
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.08) !important;
+}
+
+/* 5. 高端微光黑橙暗调弹窗卡片 (纯阴影微光，完全无边框) */
+.modal-card-glow {
+  background: 
+    radial-gradient(ellipse 75% 55% at 88% -5%, rgba(249, 115, 22, 0.16) 0%, rgba(234, 88, 12, 0.05) 50%, transparent 78%),
+    radial-gradient(ellipse 50% 35% at 10% 105%, rgba(217, 119, 6, 0.06) 0%, transparent 70%),
+    #14161f;
+  border: none !important;
+  box-shadow: 
+    0 24px 70px -10px rgba(0, 0, 0, 0.85),
+    0 0 50px -15px rgba(234, 88, 12, 0.12);
+}
+
+/* 6. 极简暗调原生级滑块（低调融合，纯白圆钮与柔和白润轨道，杜绝杂色冲突） */
+.minimal-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 4px;
+  border-radius: 9999px;
+  outline: none;
+  cursor: pointer;
+}
+
+.minimal-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 13px;
+  height: 13px;
+  border-radius: 9999px;
+  background: #ffffff;
+  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.45);
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.minimal-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+  box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.6);
+}
+
+.minimal-slider::-webkit-slider-thumb:active {
+  transform: scale(0.95);
+}
+
+.minimal-slider::-moz-range-thumb {
+  width: 13px;
+  height: 13px;
+  border: none;
+  border-radius: 9999px;
+  background: #ffffff;
+  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.45);
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.minimal-slider::-moz-range-thumb:hover {
+  transform: scale(1.15);
+}
+
+/* 美化滚动条 */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, .12);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, .22);
+}
+
+/* 7. 原生级桌面编辑模式抖动动画 (iPadOS / iOS Jiggle Mode - 纯 GPU 硬件加速) */
+@keyframes ios-jiggle-1 {
+  0% { transform: translate3d(0, 0, 0) rotate(-0.8deg); }
+  50% { transform: translate3d(0, -0.4px, 0) rotate(0.9deg); }
+  100% { transform: translate3d(0, 0, 0) rotate(-0.8deg); }
+}
+
+@keyframes ios-jiggle-2 {
+  0% { transform: translate3d(0, 0, 0) rotate(0.9deg); }
+  50% { transform: translate3d(0, 0.4px, 0) rotate(-0.8deg); }
+  100% { transform: translate3d(0, 0, 0) rotate(0.9deg); }
+}
+
+.jiggle-even {
+  animation: ios-jiggle-1 0.28s ease-in-out infinite alternate;
+  transform-origin: 50% 50%;
+  will-change: transform;
+}
+
+.jiggle-odd {
+  animation: ios-jiggle-2 0.30s ease-in-out infinite alternate;
+  transform-origin: 50% 50%;
+  will-change: transform;
+}
+
+@keyframes badge-pop-in {
+  0% { transform: scale(0); opacity: 0; }
+  75% { transform: scale(1.12); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.animate-badge-pop {
+  animation: badge-pop-in 0.18s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  will-change: transform, opacity;
+}
+
+/* 8. 工业级 react-grid-layout 自定义柔光玻璃样式 */
+.react-grid-layout {
+  position: relative;
+  transition: height 200ms ease;
+  margin: 0 auto;
+}
+
+.react-grid-item {
+  transition: all 200ms cubic-bezier(0.16, 1, 0.3, 1);
+  transition-property: left, top, right;
+  border-radius: 16px;
+}
+
+.react-resizable-handle {
+  display: none !important;
+}
+
+.react-grid-item.cssTransforms {
+  transition-property: transform;
+}
+
+/* 拖拽中的占位卡槽 (柔光微透磨砂虚线槽) */
+.react-grid-item.react-grid-placeholder {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1.5px dashed rgba(255, 255, 255, 0.28) !important;
+  border-radius: 18px !important;
+  opacity: 0.9 !important;
+  transition-duration: 120ms !important;
+  z-index: 2 !important;
+}
+
+/* 拖拽中的卡片浮空升起与阴影放大 */
+.react-grid-item.react-draggable-dragging {
+  transition: none !important;
+  z-index: 99 !important;
+  opacity: 0.92 !important;
+  filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.65));
+  cursor: grabbing !important;
+}
+
+.react-grid-item.react-draggable-dragging > div {
+  transform: scale(1.03);
+  transition: transform 0.15s ease;
+}

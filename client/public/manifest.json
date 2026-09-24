@@ -1,0 +1,18 @@
+{
+  "manifest_version": 3,
+  "name": "Station - 柔光玻璃新标签页",
+  "version": "1.0.0",
+  "description": "极具质感的液态柔光玻璃起始页与新标签页，支持个性化壁纸、智能书签与丰富小组件",
+  "action": {
+    "default_title": "Station 新标签页",
+    "default_icon": {
+      "128": "favicon.svg"
+    }
+  },
+  "chrome_url_overrides": {
+    "newtab": "index.html"
+  },
+  "icons": {
+    "128": "favicon.svg"
+  }
+}

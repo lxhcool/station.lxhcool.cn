@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="768" height="768" viewBox="0 0 768 768" role="img" aria-label="起始页标志">
+<defs>
+ <linearGradient id="left" x1="0" y1="1" x2="1" y2="0"><stop stop-color="#4b39e9"/><stop offset="1" stop-color="#137af5"/></linearGradient>
+ <linearGradient id="top" x1="0" y1="1" x2="1" y2="0"><stop stop-color="#2497ef"/><stop offset="1" stop-color="#5bdcb8"/></linearGradient>
+ <linearGradient id="right" x1="0" y1="1" x2="1" y2="0"><stop stop-color="#ff5960"/><stop offset="1" stop-color="#ffc650"/></linearGradient>
+ <linearGradient id="glass" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#38b9f1"/><stop offset="1" stop-color="#1660e9"/></linearGradient>
+</defs>
+<!-- left, top and right are independent editable vector shapes -->
+<path fill="url(#left)" d="M64 267 Q64 225 108 200 L315 70 Q359 43 398 66 L398 252 L233 350 L233 651 Q233 706 178 706 L119 706 Q64 706 64 651 Z"/>
+<path fill="url(#top)" d="M274 114 344 70 Q383 45 423 70 L657 215 Q704 244 704 294 L704 369 561 297 423 210 Q384 187 346 210 L233 280 233 170 Q233 139 274 114Z"/>
+<path fill="url(#right)" d="M561 297 636 250 Q663 232 684 245 Q704 259 704 294 L704 651 Q704 706 649 706 L619 706 Q561 706 561 651 Z"/>
+<!-- magnifying glass -->
+<path d="M458 525 493 560" fill="none" stroke="url(#glass)" stroke-width="47" stroke-linecap="round"/>
+<circle cx="369" cy="441" r="104" fill="none" stroke="url(#glass)" stroke-width="48"/>
+</svg>
