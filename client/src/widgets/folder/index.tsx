@@ -14,7 +14,7 @@ export interface FolderConfig {
   items: FolderItem[];
 }
 
-// 单个应用图标渲染器 — 统一圆角背景底板，留出黄金边距，图标不裁切
+// 单个应用图标渲染器 — 统一圆角背景底板，图标与背景留出充足呼吸边距，绝对不重叠
 const FolderAppIcon: React.FC<{
   item: FolderItem;
   size?: 'large' | 'normal' | 'small' | 'mini';
@@ -23,25 +23,25 @@ const FolderAppIcon: React.FC<{
   const [imgError, setImgError] = useState(false);
   const fallbackChar = item.title ? item.title.trim().charAt(0).toUpperCase() : '?';
 
-  // 容器尺寸 & 圆角 — 经过精确计算的黄金比例
+  // 容器底板尺寸 & 圆角
   const containerCls =
     size === 'large'
       ? 'w-[32px] h-[32px] rounded-[8px]'
       : size === 'normal'
-      ? 'w-[31px] h-[31px] rounded-[7.5px]'
+      ? 'w-[30px] h-[30px] rounded-[7.5px]'
       : size === 'small'
-      ? 'w-7 h-7 rounded-[7px]'
-      : 'w-6 h-6 rounded-[6px]';
+      ? 'w-[26px] h-[26px] rounded-[6px]'
+      : 'w-[22px] h-[22px] rounded-[5px]';
 
-  // 图标内边距 — 留出精致呼吸空间，避免 Favicon 顶边和被切
-  const imgPadding =
+  // 内部图标尺寸：严格控制在底板 62%~65% 之间，四周预留整整 5~6px 舒适留白，背景与图标层次分明绝不重叠
+  const imgCls =
     size === 'large'
-      ? 'p-[3.5px]'
+      ? 'w-[20px] h-[20px]'
       : size === 'normal'
-      ? 'p-[3px]'
+      ? 'w-[19px] h-[19px]'
       : size === 'small'
-      ? 'p-[2px]'
-      : 'p-[1.5px]';
+      ? 'w-[16px] h-[16px]'
+      : 'w-[14px] h-[14px]';
 
   const textDimensions =
     size === 'large'
@@ -53,7 +53,7 @@ const FolderAppIcon: React.FC<{
       : 'text-[9px]';
 
   const globeIconSize =
-    size === 'large' ? 15 : size === 'normal' ? 14 : size === 'small' ? 12 : 10;
+    size === 'large' ? 14 : size === 'normal' ? 13 : size === 'small' ? 11 : 9;
 
   return (
     <div
@@ -66,7 +66,7 @@ const FolderAppIcon: React.FC<{
           src={item.icon}
           alt={item.title}
           onError={() => setImgError(true)}
-          className={`w-full h-full object-contain pointer-events-none drop-shadow-sm ${imgPadding}`}
+          className={`${imgCls} object-contain pointer-events-none drop-shadow-sm`}
         />
       ) : (
         <div
@@ -191,14 +191,14 @@ const FolderWidget: React.FC<{
             type="button"
             onClick={handleOpenEdit}
             title="添加书签到文件夹"
-            className="w-[31px] h-[31px] rounded-[7.5px] border border-dashed border-white/15 hover:border-white/40 hover:bg-white/[0.08] flex items-center justify-center text-white/25 hover:text-white/75 transition-all cursor-pointer"
+            className="w-[30px] h-[30px] rounded-[7.5px] border border-dashed border-white/15 hover:border-white/40 hover:bg-white/[0.08] flex items-center justify-center text-white/25 hover:text-white/75 transition-all cursor-pointer"
           >
             <PlusSignIcon size={13} />
           </button>
         )}
 
         {Array.from({ length: Math.max(0, emptySlotsCount - 1) }).map((_, i) => (
-          <div key={`empty-${i}`} className="w-[31px] h-[31px] rounded-[7.5px] pointer-events-none" />
+          <div key={`empty-${i}`} className="w-[30px] h-[30px] rounded-[7.5px] pointer-events-none" />
         ))}
       </div>
     </div>
