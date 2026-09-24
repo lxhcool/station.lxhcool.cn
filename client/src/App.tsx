@@ -93,8 +93,8 @@ export function App() {
       <GeneralSettingsModal
         isOpen={isGeneralModalOpen}
         onClose={() => setIsGeneralModalOpen(false)}
-        openInNewTab={preferences.openInNewTab}
-        onToggleNewTab={(open) => updatePreferences({ openInNewTab: open })}
+        preferences={preferences}
+        onUpdatePreferences={updatePreferences}
       />
 
       {/* 7. 关于与扩展信息弹窗 */}

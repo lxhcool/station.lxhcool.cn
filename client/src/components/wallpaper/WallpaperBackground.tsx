@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { WallpaperConfig } from '../../types';
+import { getApiBase } from '../../services/api';
 
 interface WallpaperBackgroundProps {
   config: WallpaperConfig;
@@ -9,6 +10,14 @@ interface WallpaperState {
   url: string;
   isAmbient: boolean;
 }
+
+const resolveWallpaperUrl = (url: string): string => {
+  if (!url) return '';
+  if (url.startsWith('/uploads/') && getApiBase()) {
+    return `${getApiBase()}${url}`;
+  }
+  return url;
+};
 
 const preloadImage = (url: string): Promise<void> => {
   return new Promise((resolve) => {
@@ -40,7 +49,7 @@ const preloadImage = (url: string): Promise<void> => {
 
 export const WallpaperBackground: React.FC<WallpaperBackgroundProps> = ({ config }) => {
   const targetIsAmbient = config.type === 'ambient' || !config.url;
-  const targetUrl = targetIsAmbient ? '' : config.url;
+  const targetUrl = targetIsAmbient ? '' : resolveWallpaperUrl(config.url);
 
   // 底层当前壁纸状态（始终保持在底下，避免过渡期间露出黑色底色导致闪烁）
   const [current, setCurrent] = useState<WallpaperState>(() => ({

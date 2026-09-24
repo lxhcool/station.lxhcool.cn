@@ -72,15 +72,22 @@ toolsRouter.get('/metadata', async (req, res) => {
     const origin = parsed.origin;
     const hostname = parsed.hostname;
 
-    let title = hostname;
-    let iconUrl = `https://www.google.com/s2/favicons?domain=${hostname}&sz=128`;
+    // 安全检查：禁止探测私有内网或局域网 IP
+    const isPrivate = /^(localhost|127\.|0\.|10\.|192\.168\.|172\.(1[6-9]|2[0-9]|3[0-1])\.|169\.254\.)/i.test(hostname);
+    if (isPrivate) {
+      return res.status(400).json({ success: false, message: '禁止访问私有内网地址' });
+    }
+
+    let title = hostname.replace(/^www\./, '');
+    // 默认高可用图标：优先直连目标域名的 /favicon.ico
+    let iconUrl = `${origin}/favicon.ico`;
 
     try {
       const response = await axios.get(formattedUrl, {
         timeout: 4000,
         headers: {
-          'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
-        }
+          'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+        },
       });
 
       const $ = cheerio.load(response.data);
@@ -90,10 +97,11 @@ toolsRouter.get('/metadata', async (req, res) => {
         title = pageTitle.split(/[-_|]/)[0].trim() || pageTitle;
       }
 
-      // 提取 link icon
-      const iconHref = $('link[rel="apple-touch-icon"]').attr('href') ||
-                       $('link[rel="icon"]').attr('href') ||
-                       $('link[rel="shortcut icon"]').attr('href');
+      // 提取高分辨率 link icon
+      const iconHref =
+        $('link[rel="apple-touch-icon"]').attr('href') ||
+        $('link[rel="icon"]').attr('href') ||
+        $('link[rel="shortcut icon"]').attr('href');
 
       if (iconHref) {
         if (iconHref.startsWith('http')) {
@@ -107,8 +115,9 @@ toolsRouter.get('/metadata', async (req, res) => {
         }
       }
     } catch (fetchErr) {
-      // 访问失败时直接降级为 google s2 favicon
+      // 访问网页超时或失败时，以直连 /favicon.ico 或国内高可用 CDN 作为兜底
       title = hostname.replace(/^www\./, '');
+      iconUrl = `${origin}/favicon.ico`;
     }
 
     res.json({

@@ -1,10 +1,20 @@
 import { UserPreferences, WallpaperItem } from '../types';
 
+// 线上生产服务器域名（当运行在 Chrome 扩展环境下 chrome-extension:// 时，自动路由到此生产服务）
+export const PROD_API_ORIGIN = 'https://station.lxhcool.cn';
+
+export const getApiBase = (): string => {
+  if (typeof window !== 'undefined' && window.location.protocol === 'chrome-extension:') {
+    return PROD_API_ORIGIN;
+  }
+  return '';
+};
+
 export const api = {
   // 同步：拉取配置
   async pullConfig(token: string): Promise<{ success: boolean; data?: UserPreferences; message?: string }> {
     try {
-      const res = await fetch(`/api/sync/pull/${encodeURIComponent(token)}`);
+      const res = await fetch(`${getApiBase()}/api/sync/pull/${encodeURIComponent(token)}`);
       return await res.json();
     } catch (err: any) {
       return { success: false, message: err.message };
@@ -14,7 +24,7 @@ export const api = {
   // 同步：推送配置
   async pushConfig(token: string, data: UserPreferences, deviceName?: string): Promise<{ success: boolean; message?: string }> {
     try {
-      const res = await fetch('/api/sync/push', {
+      const res = await fetch(`${getApiBase()}/api/sync/push`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ token, data, deviceName }),
@@ -28,7 +38,9 @@ export const api = {
   // 获取官方精选壁纸库
   async getWallpapers(category?: string): Promise<WallpaperItem[]> {
     try {
-      const url = category && category !== 'all' ? `/api/wallpapers?category=${category}` : '/api/wallpapers';
+      const url = category && category !== 'all'
+        ? `${getApiBase()}/api/wallpapers?category=${category}`
+        : `${getApiBase()}/api/wallpapers`;
       const res = await fetch(url);
       const json = await res.json();
       return json.success ? json.data : [];
@@ -40,7 +52,7 @@ export const api = {
   // 获取必应每日壁纸
   async getBingWallpaper(): Promise<{ url: string; title: string; copyright: string } | null> {
     try {
-      const res = await fetch('/api/wallpapers/bing');
+      const res = await fetch(`${getApiBase()}/api/wallpapers/bing`);
       const json = await res.json();
       return json.success ? json.data : null;
     } catch {
@@ -51,7 +63,7 @@ export const api = {
   // 抓取网址的标题与 Favicon
   async getSiteMetadata(url: string): Promise<{ url: string; title: string; icon: string } | null> {
     try {
-      const res = await fetch(`/api/tools/metadata?url=${encodeURIComponent(url)}`);
+      const res = await fetch(`${getApiBase()}/api/tools/metadata?url=${encodeURIComponent(url)}`);
       const json = await res.json();
       return json.success ? json.data : null;
     } catch {
@@ -64,12 +76,17 @@ export const api = {
     try {
       const formData = new FormData();
       formData.append('file', file);
-      const res = await fetch('/api/tools/upload', {
+      const res = await fetch(`${getApiBase()}/api/tools/upload`, {
         method: 'POST',
         body: formData,
       });
       const json = await res.json();
-      return json.success ? json.url : null;
+      if (!json.success || !json.url) return null;
+      // 扩展环境下若返回相对路径 /uploads/...，拼接完整线上前缀
+      if (json.url.startsWith('/') && getApiBase()) {
+        return `${getApiBase()}${json.url}`;
+      }
+      return json.url;
     } catch {
       return null;
     }
