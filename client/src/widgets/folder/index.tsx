@@ -85,85 +85,75 @@ const FolderWidget: React.FC<{
     );
   };
 
-  // 1x2 竖向卡片规格 (纵向最多排列 3 个书签图标，底部文件夹标题)
+  // 1x2 竖向卡片规格 (纵向最多排列 3 个书签图标，纯净无文字显示)
   if (size === '1x2') {
     const maxItems = 3;
     const displayItems = items.slice(0, maxItems);
     const hasRoom = displayItems.length < maxItems;
 
     return (
-      <div className="w-full h-full rounded-[18px] bg-white/[0.08] hover:bg-white/[0.12] active:scale-98 backdrop-blur-xl border border-white/[0.08] shadow-[0_8px_24px_-4px_rgba(0,0,0,0.3)] p-2 flex flex-col justify-between select-none overflow-hidden transition-all duration-200">
-        <div className="flex flex-col items-center justify-center gap-2.5 flex-1 w-full my-auto">
-          {displayItems.map((item) => (
-            <FolderAppIcon
-              key={item.id}
-              item={item}
-              size="normal"
-              onClick={(e) => handleItemClick(e, item)}
-            />
-          ))}
-          {hasRoom && (
-            <button
-              type="button"
-              onClick={handleOpenEdit}
-              title="添加书签到文件夹"
-              className="w-7 h-7 rounded-[7px] border border-dashed border-white/20 hover:border-white/40 hover:bg-white/[0.08] flex items-center justify-center text-white/30 hover:text-white/70 transition-all cursor-pointer"
-            >
-              <PlusSignIcon size={13} />
-            </button>
-          )}
-        </div>
-        <span className="text-[10.5px] font-medium text-white/75 group-hover:text-white truncate text-center tracking-tight px-0.5 shrink-0 transition-colors">
-          {title}
-        </span>
+      <div className="w-full h-full rounded-[18px] bg-white/[0.08] hover:bg-white/[0.12] active:scale-98 backdrop-blur-xl border border-white/[0.08] shadow-[0_8px_24px_-4px_rgba(0,0,0,0.3)] p-2.5 flex flex-col items-center justify-center gap-3 select-none overflow-hidden transition-all duration-200">
+        {displayItems.map((item) => (
+          <FolderAppIcon
+            key={item.id}
+            item={item}
+            size="normal"
+            onClick={(e) => handleItemClick(e, item)}
+          />
+        ))}
+        {hasRoom && (
+          <button
+            type="button"
+            onClick={handleOpenEdit}
+            title="添加书签到文件夹"
+            className="w-7 h-7 rounded-[7px] border border-dashed border-white/20 hover:border-white/40 hover:bg-white/[0.08] flex items-center justify-center text-white/30 hover:text-white/70 transition-all cursor-pointer"
+          >
+            <PlusSignIcon size={13} />
+          </button>
+        )}
       </div>
     );
   }
 
-  // 2x1 横向卡片规格 (横向最多排列 3 个书签图标，底部文件夹标题)
+  // 2x1 横向卡片规格 (横向最多排列 3 个书签图标，纯净无文字显示)
   if (size === '2x1') {
     const maxItems = 3;
     const displayItems = items.slice(0, maxItems);
     const hasRoom = displayItems.length < maxItems;
 
     return (
-      <div className="w-full h-full rounded-[18px] bg-white/[0.08] hover:bg-white/[0.12] active:scale-98 backdrop-blur-xl border border-white/[0.08] shadow-[0_8px_24px_-4px_rgba(0,0,0,0.3)] p-2 flex flex-col justify-between select-none overflow-hidden transition-all duration-200">
-        <div className="flex items-center justify-center gap-3.5 flex-1 w-full my-auto">
-          {displayItems.map((item) => (
-            <FolderAppIcon
-              key={item.id}
-              item={item}
-              size="normal"
-              onClick={(e) => handleItemClick(e, item)}
-            />
-          ))}
-          {hasRoom && (
-            <button
-              type="button"
-              onClick={handleOpenEdit}
-              title="添加书签到文件夹"
-              className="w-7 h-7 rounded-[7px] border border-dashed border-white/20 hover:border-white/40 hover:bg-white/[0.08] flex items-center justify-center text-white/30 hover:text-white/70 transition-all cursor-pointer"
-            >
-              <PlusSignIcon size={13} />
-            </button>
-          )}
-        </div>
-        <span className="text-[10.5px] font-medium text-white/75 group-hover:text-white truncate text-center tracking-tight px-1 shrink-0 transition-colors">
-          {title}
-        </span>
+      <div className="w-full h-full rounded-[18px] bg-white/[0.08] hover:bg-white/[0.12] active:scale-98 backdrop-blur-xl border border-white/[0.08] shadow-[0_8px_24px_-4px_rgba(0,0,0,0.3)] p-2.5 flex items-center justify-center gap-3.5 select-none overflow-hidden transition-all duration-200">
+        {displayItems.map((item) => (
+          <FolderAppIcon
+            key={item.id}
+            item={item}
+            size="normal"
+            onClick={(e) => handleItemClick(e, item)}
+          />
+        ))}
+        {hasRoom && (
+          <button
+            type="button"
+            onClick={handleOpenEdit}
+            title="添加书签到文件夹"
+            className="w-7 h-7 rounded-[7px] border border-dashed border-white/20 hover:border-white/40 hover:bg-white/[0.08] flex items-center justify-center text-white/30 hover:text-white/70 transition-all cursor-pointer"
+          >
+            <PlusSignIcon size={13} />
+          </button>
+        )}
       </div>
     );
   }
 
-  // 2x2 标准 9 宫格大文件夹 (最多 9 个书签，可不填满，底部文件夹标题)
+  // 2x2 标准 9 宫格大文件夹 (最多 9 个书签，纯净无文字显示)
   const maxItems = 9;
   const displayItems = items.slice(0, maxItems);
   const emptySlotsCount = maxItems - displayItems.length;
 
   return (
-    <div className="w-full h-full rounded-[18px] bg-white/[0.08] hover:bg-white/[0.12] active:scale-98 backdrop-blur-xl border border-white/[0.08] shadow-[0_8px_24px_-4px_rgba(0,0,0,0.3)] p-2.5 flex flex-col justify-between select-none overflow-hidden transition-all duration-200">
+    <div className="w-full h-full rounded-[18px] bg-white/[0.08] hover:bg-white/[0.12] active:scale-98 backdrop-blur-xl border border-white/[0.08] shadow-[0_8px_24px_-4px_rgba(0,0,0,0.3)] p-3 flex items-center justify-center select-none overflow-hidden transition-all duration-200">
       {/* 3x3 九宫格书签区域 */}
-      <div className="grid grid-cols-3 grid-rows-3 gap-1.5 w-full flex-1 items-center justify-items-center my-auto">
+      <div className="grid grid-cols-3 grid-rows-3 gap-2 w-full h-full items-center justify-items-center">
         {displayItems.map((item) => (
           <FolderAppIcon
             key={item.id}
@@ -189,14 +179,10 @@ const FolderWidget: React.FC<{
           <div key={`empty-${i}`} className="w-7 h-7 rounded-[7px] pointer-events-none" />
         ))}
       </div>
-
-      {/* 底部文件夹名称 */}
-      <span className="text-[11.5px] font-medium text-white/75 group-hover:text-white truncate text-center tracking-tight px-1 shrink-0 transition-colors pt-0.5">
-        {title}
-      </span>
     </div>
   );
 };
+
 
 export const folderStrategy: WidgetStrategy<FolderConfig> = {
   type: 'folder',
