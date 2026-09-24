@@ -562,7 +562,7 @@ export const AddWidgetModal: React.FC<AddWidgetModalProps> = ({
                   type="text"
                   value={folderTitle}
                   onChange={(e) => setFolderTitle(e.target.value)}
-                  placeholder="如：常用应用、生活、影音娱乐"
+                  placeholder="如：常用书签、生活出行、影音娱乐"
                   className="w-full px-3.5 py-2.5 rounded-xl bg-white/[0.06] hover:bg-white/[0.09] focus:bg-white/[0.12] text-sm text-white placeholder-white/25 focus:outline-none transition-colors border-none"
                 />
               </div>
@@ -571,10 +571,10 @@ export const AddWidgetModal: React.FC<AddWidgetModalProps> = ({
                 <label className="text-xs text-white/70 font-medium">选择预设模板</label>
                 <div className="grid grid-cols-2 gap-2">
                   {[
-                    { key: 'featured', name: '常用精选', desc: 'GitHub, B站, 微信读书, 知乎' },
-                    { key: 'life', name: '生活出行', desc: '高德地图, 12306, 点评, 美团' },
-                    { key: 'media', name: '影音娱乐', desc: 'B站, 网易云, 少数派, 豆瓣' },
-                    { key: 'dev', name: '开发技术', desc: 'GitHub, 掘金, V2EX, StackOverflow' },
+                    { key: 'featured', name: '常用精选', desc: 'GitHub, B站, 微信读书' },
+                    { key: 'life', name: '生活出行', desc: '高德地图, 12306, 点评' },
+                    { key: 'media', name: '影音娱乐', desc: 'B站, 网易云, 少数派' },
+                    { key: 'dev', name: '开发技术', desc: 'GitHub, 掘金, V2EX' },
                   ].map((preset) => {
                     const isCurrent = folderPreset === preset.key;
                     return (
@@ -608,10 +608,11 @@ export const AddWidgetModal: React.FC<AddWidgetModalProps> = ({
               </div>
 
               <div className="text-[11px] text-white/45 bg-white/[0.03] p-2.5 rounded-xl border border-white/[0.04] leading-relaxed">
-                💡 文件夹支持 2x2 (3x3 九宫格，最多 9 个应用，可不填满)、2x1 (双格横排)、1x2 (双格竖排) 以及 1x1。点击内部图标直接跳转，桌面右键文件夹可随时管理与排序。
+                💡 书签文件夹只支持快捷书签，横竖（2x1 / 1x2）最多放 3 个图标，九宫格（2x2）最多放 9 个图标（可不填满）。点击图标直接跳转，桌面右键文件夹可随时管理与排序。
               </div>
             </div>
           )}
+
 
           {activeStrategy?.type === 'weather' && (
             <div className="space-y-1 pt-1">

@@ -488,15 +488,8 @@ export const WidgetCanvas: React.FC<WidgetCanvasProps> = ({
           isOpen={!!editingFolder}
           folderTitle={editingFolder.config?.title || '文件夹'}
           items={editingFolder.config?.items || []}
-          maxItems={
-            editingFolder.size === '2x2'
-              ? 9
-              : editingFolder.size === '2x1'
-              ? 4
-              : editingFolder.size === '1x2'
-              ? 3
-              : 4
-          }
+          maxItems={editingFolder.size === '2x2' ? 9 : 3}
+
           onSave={(newCfg) => {
             onUpdateWidgets(
               widgets.map((w) =>

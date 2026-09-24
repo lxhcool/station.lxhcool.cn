@@ -242,9 +242,9 @@ export const FolderEditModal: React.FC<FolderEditModalProps> = ({
           {/* 标题栏 */}
           <div className="flex items-center justify-between">
             <div>
-              <h2 className="text-base font-bold tracking-tight text-white/95">编辑文件夹</h2>
+              <h2 className="text-base font-bold tracking-tight text-white/95">编辑书签文件夹</h2>
               <p className="text-xs text-white/40 mt-0.5">
-                支持自定义文件夹名称与应用，点击图标直接访问
+                自定义文件夹名称与书签列表，点击图标直接访问
               </p>
             </div>
             <button
@@ -262,22 +262,23 @@ export const FolderEditModal: React.FC<FolderEditModalProps> = ({
               type="text"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              placeholder="如：生活、社交、影音娱乐"
+              placeholder="如：常用书签、社交、生活出行"
               maxLength={20}
               className="w-full px-3.5 py-2 rounded-xl bg-white/[0.06] hover:bg-white/[0.09] focus:bg-white/[0.12] text-sm text-white placeholder-white/25 focus:outline-none transition-colors border-none"
             />
           </div>
 
-          {/* 已包含的应用列表 */}
+          {/* 已包含的书签列表 */}
           <div className="space-y-2">
             <div className="flex items-center justify-between">
               <label className="text-xs text-white/70 font-medium">
-                包含的应用 ({items.length}/{maxItems})
+                包含的书签 ({items.length}/{maxItems})
               </label>
               {items.length >= maxItems && (
                 <span className="text-[11px] text-amber-400">已达最大容纳上限</span>
               )}
             </div>
+
 
             <div className="space-y-1.5 max-h-[220px] overflow-y-auto no-scrollbar pr-0.5">
               {items.map((item, idx) => (
@@ -346,17 +347,17 @@ export const FolderEditModal: React.FC<FolderEditModalProps> = ({
 
               {items.length === 0 && (
                 <div className="text-center py-6 text-xs text-white/30 border border-dashed border-white/10 rounded-xl">
-                  文件夹内暂无应用，可通过下方添加
+                  文件夹内暂无书签，可通过下方添加
                 </div>
               )}
             </div>
           </div>
 
-          {/* 新增应用表单 (若未满) */}
+          {/* 新增书签表单 (若未满) */}
           {items.length < maxItems && (
             <div className="space-y-2 pt-1 border-t border-white/[0.06]">
               <div className="flex items-center justify-between">
-                <label className="text-xs text-white/70 font-medium">添加新应用</label>
+                <label className="text-xs text-white/70 font-medium">添加新书签</label>
                 {isLoadingMeta && (
                   <span className="text-[11px] text-orange-400 flex items-center gap-1 font-normal animate-in fade-in">
                     <Loading03Icon size={12} className="animate-spin" />
@@ -378,7 +379,7 @@ export const FolderEditModal: React.FC<FolderEditModalProps> = ({
                   type="text"
                   value={newTitle}
                   onChange={(e) => setNewTitle(e.target.value)}
-                  placeholder="应用名称"
+                  placeholder="书签名称"
                   className="px-3 py-2 rounded-xl bg-white/[0.06] hover:bg-white/[0.09] focus:bg-white/[0.12] text-xs text-white placeholder-white/25 focus:outline-none transition-colors border-none"
                 />
                 <button
@@ -392,9 +393,9 @@ export const FolderEditModal: React.FC<FolderEditModalProps> = ({
                 </button>
               </div>
 
-              {/* 常用热门应用一键填入 */}
+              {/* 常用热门书签一键填入 */}
               <div className="space-y-1 pt-1">
-                <span className="text-[10.5px] text-white/40">常用应用快捷添加:</span>
+                <span className="text-[10.5px] text-white/40">常用书签快捷添加:</span>
                 <div className="flex items-center gap-1.5 flex-wrap">
                   {PRESET_APPS.filter((p) => !items.some((it) => it.url === p.url)).map(
                     (preset) => (
@@ -412,6 +413,7 @@ export const FolderEditModal: React.FC<FolderEditModalProps> = ({
               </div>
             </div>
           )}
+
 
           {/* 底部按钮 */}
           <div className="flex items-center justify-end gap-2.5 pt-2 border-t border-white/[0.06]">

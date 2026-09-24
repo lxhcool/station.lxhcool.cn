@@ -85,7 +85,7 @@ const FolderWidget: React.FC<{
     );
   };
 
-  // 1x2 竖向卡片规格 (纵向排列 2-3 个应用图标，底部文件夹标题)
+  // 1x2 竖向卡片规格 (纵向最多排列 3 个书签图标，底部文件夹标题)
   if (size === '1x2') {
     const maxItems = 3;
     const displayItems = items.slice(0, maxItems);
@@ -106,7 +106,7 @@ const FolderWidget: React.FC<{
             <button
               type="button"
               onClick={handleOpenEdit}
-              title="添加应用到文件夹"
+              title="添加书签到文件夹"
               className="w-7 h-7 rounded-[7px] border border-dashed border-white/20 hover:border-white/40 hover:bg-white/[0.08] flex items-center justify-center text-white/30 hover:text-white/70 transition-all cursor-pointer"
             >
               <PlusSignIcon size={13} />
@@ -120,15 +120,15 @@ const FolderWidget: React.FC<{
     );
   }
 
-  // 2x1 横向卡片规格 (横向排列 2-4 个应用图标，底部文件夹标题)
+  // 2x1 横向卡片规格 (横向最多排列 3 个书签图标，底部文件夹标题)
   if (size === '2x1') {
-    const maxItems = 4;
+    const maxItems = 3;
     const displayItems = items.slice(0, maxItems);
     const hasRoom = displayItems.length < maxItems;
 
     return (
       <div className="w-full h-full rounded-[18px] bg-white/[0.08] hover:bg-white/[0.12] active:scale-98 backdrop-blur-xl border border-white/[0.08] shadow-[0_8px_24px_-4px_rgba(0,0,0,0.3)] p-2 flex flex-col justify-between select-none overflow-hidden transition-all duration-200">
-        <div className="flex items-center justify-center gap-3 flex-1 w-full my-auto">
+        <div className="flex items-center justify-center gap-3.5 flex-1 w-full my-auto">
           {displayItems.map((item) => (
             <FolderAppIcon
               key={item.id}
@@ -141,7 +141,7 @@ const FolderWidget: React.FC<{
             <button
               type="button"
               onClick={handleOpenEdit}
-              title="添加应用到文件夹"
+              title="添加书签到文件夹"
               className="w-7 h-7 rounded-[7px] border border-dashed border-white/20 hover:border-white/40 hover:bg-white/[0.08] flex items-center justify-center text-white/30 hover:text-white/70 transition-all cursor-pointer"
             >
               <PlusSignIcon size={13} />
@@ -155,49 +155,14 @@ const FolderWidget: React.FC<{
     );
   }
 
-  // 1x1 迷你小卡片规格 (2x2 微缩 4 宫格)
-  if (size === '1x1') {
-    const maxItems = 4;
-    const displayItems = items.slice(0, maxItems);
-    const hasRoom = displayItems.length < maxItems;
-
-    return (
-      <div className="w-full h-full rounded-[18px] bg-white/[0.08] hover:bg-white/[0.12] active:scale-98 backdrop-blur-xl border border-white/[0.08] shadow-[0_8px_24px_-4px_rgba(0,0,0,0.3)] p-1.5 flex flex-col justify-between select-none overflow-hidden transition-all duration-200">
-        <div className="grid grid-cols-2 grid-rows-2 gap-1 w-full flex-1 items-center justify-items-center my-auto">
-          {displayItems.map((item) => (
-            <FolderAppIcon
-              key={item.id}
-              item={item}
-              size="mini"
-              onClick={(e) => handleItemClick(e, item)}
-            />
-          ))}
-          {hasRoom && (
-            <button
-              type="button"
-              onClick={handleOpenEdit}
-              title="添加应用到文件夹"
-              className="w-5 h-5 rounded-[5px] border border-dashed border-white/20 hover:border-white/40 hover:bg-white/[0.08] flex items-center justify-center text-white/30 hover:text-white/70 transition-all cursor-pointer"
-            >
-              <PlusSignIcon size={10} />
-            </button>
-          )}
-        </div>
-        <span className="text-[9.5px] font-medium text-white/75 group-hover:text-white truncate text-center tracking-tight px-0.5 shrink-0 transition-colors">
-          {title}
-        </span>
-      </div>
-    );
-  }
-
-  // 2x2 标准 9 宫格大文件夹 (最多 9 个应用，可不填满，底部文件夹标题)
+  // 2x2 标准 9 宫格大文件夹 (最多 9 个书签，可不填满，底部文件夹标题)
   const maxItems = 9;
   const displayItems = items.slice(0, maxItems);
   const emptySlotsCount = maxItems - displayItems.length;
 
   return (
     <div className="w-full h-full rounded-[18px] bg-white/[0.08] hover:bg-white/[0.12] active:scale-98 backdrop-blur-xl border border-white/[0.08] shadow-[0_8px_24px_-4px_rgba(0,0,0,0.3)] p-2.5 flex flex-col justify-between select-none overflow-hidden transition-all duration-200">
-      {/* 3x3 九宫格应用区域 */}
+      {/* 3x3 九宫格书签区域 */}
       <div className="grid grid-cols-3 grid-rows-3 gap-1.5 w-full flex-1 items-center justify-items-center my-auto">
         {displayItems.map((item) => (
           <FolderAppIcon
@@ -213,7 +178,7 @@ const FolderWidget: React.FC<{
           <button
             type="button"
             onClick={handleOpenEdit}
-            title="添加应用到文件夹"
+            title="添加书签到文件夹"
             className="w-7 h-7 rounded-[7px] border border-dashed border-white/15 hover:border-white/40 hover:bg-white/[0.08] flex items-center justify-center text-white/25 hover:text-white/75 transition-all cursor-pointer"
           >
             <PlusSignIcon size={13} />
@@ -235,13 +200,13 @@ const FolderWidget: React.FC<{
 
 export const folderStrategy: WidgetStrategy<FolderConfig> = {
   type: 'folder',
-  name: '应用文件夹',
-  description: '九宫格大文件夹与横竖多形态容器，无需弹窗直接点击跳转，最多容纳9个应用',
+  name: '书签文件夹',
+  description: '九宫格大文件夹与横竖多形态书签容器，点击书签直接跳转，横竖最多3个，九宫格最多9个',
   icon: Folder01Icon,
   defaultSize: '2x2',
-  supportedSizes: ['2x2', '2x1', '1x2', '1x1'],
+  supportedSizes: ['2x2', '2x1', '1x2'],
   defaultConfig: {
-    title: '常用应用',
+    title: '常用书签',
     items: [
       {
         id: 'f-1',
@@ -261,13 +226,8 @@ export const folderStrategy: WidgetStrategy<FolderConfig> = {
         url: 'https://weread.qq.com',
         icon: 'https://weread.qq.com/favicon.ico',
       },
-      {
-        id: 'f-4',
-        title: '知乎',
-        url: 'https://www.zhihu.com',
-        icon: 'https://static.zhihu.com/heifetz/favicon.ico',
-      },
     ],
   },
   render: FolderWidget,
 };
+
