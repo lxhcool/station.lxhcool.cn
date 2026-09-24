@@ -14,7 +14,7 @@ export interface FolderConfig {
   items: FolderItem[];
 }
 
-// 单个应用图标渲染器
+// 单个应用图标渲染器 — 统一圆角背景底板，图标不裁切
 const FolderAppIcon: React.FC<{
   item: FolderItem;
   size?: 'normal' | 'small' | 'mini';
@@ -23,12 +23,16 @@ const FolderAppIcon: React.FC<{
   const [imgError, setImgError] = useState(false);
   const fallbackChar = item.title ? item.title.trim().charAt(0).toUpperCase() : '?';
 
-  const iconDimensions =
+  // 容器尺寸 & 圆角 — 所有图标统一圆角背景底板
+  const containerCls =
     size === 'mini'
       ? 'w-5 h-5 rounded-[5px]'
       : size === 'small'
       ? 'w-6 h-6 rounded-[6px]'
       : 'w-7 h-7 rounded-[7px]';
+
+  // 图标内边距 — 留出呼吸空间，避免贴边
+  const imgPadding = size === 'mini' ? 'p-[3px]' : size === 'small' ? 'p-[3px]' : 'p-[4px]';
 
   const textDimensions =
     size === 'mini' ? 'text-[9px]' : size === 'small' ? 'text-[10px]' : 'text-[11px]';
@@ -37,18 +41,18 @@ const FolderAppIcon: React.FC<{
     <div
       onClick={onClick}
       title={item.title}
-      className={`${iconDimensions} flex items-center justify-center shrink-0 cursor-pointer transition-transform duration-150 hover:scale-110 active:scale-95 group/app select-none`}
+      className={`${containerCls} bg-white/[0.10] hover:bg-white/[0.18] flex items-center justify-center shrink-0 cursor-pointer transition-all duration-150 hover:scale-110 active:scale-95 group/app select-none overflow-hidden`}
     >
       {item.icon && !imgError ? (
         <img
           src={item.icon}
           alt={item.title}
           onError={() => setImgError(true)}
-          className="w-full h-full object-contain rounded-inherit pointer-events-none drop-shadow-sm"
+          className={`w-full h-full object-contain pointer-events-none drop-shadow-sm ${imgPadding}`}
         />
       ) : (
         <div
-          className={`w-full h-full rounded-inherit bg-white/[0.12] group-hover/app:bg-white/[0.2] flex items-center justify-center ${textDimensions} font-semibold text-white/90 shadow-sm transition-colors`}
+          className={`w-full h-full flex items-center justify-center ${textDimensions} font-semibold text-white/90 transition-colors`}
         >
           {fallbackChar || <GlobeIcon size={12} className="text-white/60" />}
         </div>
