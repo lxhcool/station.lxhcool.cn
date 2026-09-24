@@ -14,28 +14,46 @@ export interface FolderConfig {
   items: FolderItem[];
 }
 
-// 单个应用图标渲染器 — 统一圆角背景底板，图标不裁切
+// 单个应用图标渲染器 — 统一圆角背景底板，留出黄金边距，图标不裁切
 const FolderAppIcon: React.FC<{
   item: FolderItem;
-  size?: 'normal' | 'small' | 'mini';
+  size?: 'large' | 'normal' | 'small' | 'mini';
   onClick: (e: React.MouseEvent) => void;
 }> = ({ item, size = 'normal', onClick }) => {
   const [imgError, setImgError] = useState(false);
   const fallbackChar = item.title ? item.title.trim().charAt(0).toUpperCase() : '?';
 
-  // 容器尺寸 & 圆角 — 所有图标统一圆角背景底板
+  // 容器尺寸 & 圆角 — 经过精确计算的黄金比例
   const containerCls =
-    size === 'mini'
-      ? 'w-5 h-5 rounded-[5px]'
+    size === 'large'
+      ? 'w-[32px] h-[32px] rounded-[8px]'
+      : size === 'normal'
+      ? 'w-[31px] h-[31px] rounded-[7.5px]'
       : size === 'small'
-      ? 'w-6 h-6 rounded-[6px]'
-      : 'w-7 h-7 rounded-[7px]';
+      ? 'w-7 h-7 rounded-[7px]'
+      : 'w-6 h-6 rounded-[6px]';
 
-  // 图标内边距 — 留出呼吸空间，避免贴边
-  const imgPadding = size === 'mini' ? 'p-[3px]' : size === 'small' ? 'p-[3px]' : 'p-[4px]';
+  // 图标内边距 — 留出精致呼吸空间，避免 Favicon 顶边和被切
+  const imgPadding =
+    size === 'large'
+      ? 'p-[3.5px]'
+      : size === 'normal'
+      ? 'p-[3px]'
+      : size === 'small'
+      ? 'p-[2px]'
+      : 'p-[1.5px]';
 
   const textDimensions =
-    size === 'mini' ? 'text-[9px]' : size === 'small' ? 'text-[10px]' : 'text-[11px]';
+    size === 'large'
+      ? 'text-[12px]'
+      : size === 'normal'
+      ? 'text-[11px]'
+      : size === 'small'
+      ? 'text-[10px]'
+      : 'text-[9px]';
+
+  const globeIconSize =
+    size === 'large' ? 15 : size === 'normal' ? 14 : size === 'small' ? 12 : 10;
 
   return (
     <div
@@ -54,7 +72,7 @@ const FolderAppIcon: React.FC<{
         <div
           className={`w-full h-full flex items-center justify-center ${textDimensions} font-semibold text-white/90 transition-colors`}
         >
-          {fallbackChar || <GlobeIcon size={12} className="text-white/60" />}
+          {fallbackChar || <GlobeIcon size={globeIconSize} className="text-white/60" />}
         </div>
       )}
     </div>
@@ -96,12 +114,12 @@ const FolderWidget: React.FC<{
     const hasRoom = displayItems.length < maxItems;
 
     return (
-      <div className="w-full h-full rounded-[18px] bg-white/[0.08] hover:bg-white/[0.12] active:scale-98 backdrop-blur-xl border border-white/[0.08] shadow-[0_8px_24px_-4px_rgba(0,0,0,0.3)] p-2.5 flex flex-col items-center justify-center gap-3 select-none overflow-hidden transition-all duration-200">
+      <div className="w-full h-full rounded-[18px] bg-white/[0.08] hover:bg-white/[0.12] active:scale-98 backdrop-blur-xl border border-white/[0.08] shadow-[0_8px_24px_-4px_rgba(0,0,0,0.3)] py-3 px-2 flex flex-col items-center justify-center gap-3 select-none overflow-hidden transition-all duration-200">
         {displayItems.map((item) => (
           <FolderAppIcon
             key={item.id}
             item={item}
-            size="normal"
+            size="large"
             onClick={(e) => handleItemClick(e, item)}
           />
         ))}
@@ -110,9 +128,9 @@ const FolderWidget: React.FC<{
             type="button"
             onClick={handleOpenEdit}
             title="添加书签到文件夹"
-            className="w-7 h-7 rounded-[7px] border border-dashed border-white/20 hover:border-white/40 hover:bg-white/[0.08] flex items-center justify-center text-white/30 hover:text-white/70 transition-all cursor-pointer"
+            className="w-[32px] h-[32px] rounded-[8px] border border-dashed border-white/20 hover:border-white/40 hover:bg-white/[0.08] flex items-center justify-center text-white/30 hover:text-white/70 transition-all cursor-pointer"
           >
-            <PlusSignIcon size={13} />
+            <PlusSignIcon size={14} />
           </button>
         )}
       </div>
@@ -126,12 +144,12 @@ const FolderWidget: React.FC<{
     const hasRoom = displayItems.length < maxItems;
 
     return (
-      <div className="w-full h-full rounded-[18px] bg-white/[0.08] hover:bg-white/[0.12] active:scale-98 backdrop-blur-xl border border-white/[0.08] shadow-[0_8px_24px_-4px_rgba(0,0,0,0.3)] p-2.5 flex items-center justify-center gap-3.5 select-none overflow-hidden transition-all duration-200">
+      <div className="w-full h-full rounded-[18px] bg-white/[0.08] hover:bg-white/[0.12] active:scale-98 backdrop-blur-xl border border-white/[0.08] shadow-[0_8px_24px_-4px_rgba(0,0,0,0.3)] px-3 py-2 flex items-center justify-center gap-3.5 select-none overflow-hidden transition-all duration-200">
         {displayItems.map((item) => (
           <FolderAppIcon
             key={item.id}
             item={item}
-            size="normal"
+            size="large"
             onClick={(e) => handleItemClick(e, item)}
           />
         ))}
@@ -140,9 +158,9 @@ const FolderWidget: React.FC<{
             type="button"
             onClick={handleOpenEdit}
             title="添加书签到文件夹"
-            className="w-7 h-7 rounded-[7px] border border-dashed border-white/20 hover:border-white/40 hover:bg-white/[0.08] flex items-center justify-center text-white/30 hover:text-white/70 transition-all cursor-pointer"
+            className="w-[32px] h-[32px] rounded-[8px] border border-dashed border-white/20 hover:border-white/40 hover:bg-white/[0.08] flex items-center justify-center text-white/30 hover:text-white/70 transition-all cursor-pointer"
           >
-            <PlusSignIcon size={13} />
+            <PlusSignIcon size={14} />
           </button>
         )}
       </div>
@@ -155,7 +173,7 @@ const FolderWidget: React.FC<{
   const emptySlotsCount = maxItems - displayItems.length;
 
   return (
-    <div className="w-full h-full rounded-[18px] bg-white/[0.08] hover:bg-white/[0.12] active:scale-98 backdrop-blur-xl border border-white/[0.08] shadow-[0_8px_24px_-4px_rgba(0,0,0,0.3)] p-3 flex items-center justify-center select-none overflow-hidden transition-all duration-200">
+    <div className="w-full h-full rounded-[18px] bg-white/[0.08] hover:bg-white/[0.12] active:scale-98 backdrop-blur-xl border border-white/[0.08] shadow-[0_8px_24px_-4px_rgba(0,0,0,0.3)] p-3.5 flex items-center justify-center select-none overflow-hidden transition-all duration-200">
       {/* 3x3 九宫格书签区域 */}
       <div className="grid grid-cols-3 grid-rows-3 gap-2 w-full h-full items-center justify-items-center">
         {displayItems.map((item) => (
@@ -173,14 +191,14 @@ const FolderWidget: React.FC<{
             type="button"
             onClick={handleOpenEdit}
             title="添加书签到文件夹"
-            className="w-7 h-7 rounded-[7px] border border-dashed border-white/15 hover:border-white/40 hover:bg-white/[0.08] flex items-center justify-center text-white/25 hover:text-white/75 transition-all cursor-pointer"
+            className="w-[31px] h-[31px] rounded-[7.5px] border border-dashed border-white/15 hover:border-white/40 hover:bg-white/[0.08] flex items-center justify-center text-white/25 hover:text-white/75 transition-all cursor-pointer"
           >
             <PlusSignIcon size={13} />
           </button>
         )}
 
         {Array.from({ length: Math.max(0, emptySlotsCount - 1) }).map((_, i) => (
-          <div key={`empty-${i}`} className="w-7 h-7 rounded-[7px] pointer-events-none" />
+          <div key={`empty-${i}`} className="w-[31px] h-[31px] rounded-[7.5px] pointer-events-none" />
         ))}
       </div>
     </div>
