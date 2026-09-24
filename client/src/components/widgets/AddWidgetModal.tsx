@@ -209,8 +209,55 @@ export const AddWidgetModal: React.FC<AddWidgetModalProps> = ({
   // 天气特定输入字段
   const [weatherCity, setWeatherCity] = useState('厦门');
 
+  // 文件夹特定输入字段
+  const [folderTitle, setFolderTitle] = useState('常用应用');
+  const [folderPreset, setFolderPreset] = useState<'featured' | 'life' | 'media' | 'dev'>('featured');
+
+  const FOLDER_PRESETS: Record<
+    string,
+    { title: string; items: Array<{ id: string; title: string; url: string; icon: string }> }
+  > = {
+    featured: {
+      title: '常用应用',
+      items: [
+        { id: '1', title: 'GitHub', url: 'https://github.com', icon: 'https://github.githubassets.com/favicons/favicon.svg' },
+        { id: '2', title: '哔哩哔哩', url: 'https://www.bilibili.com', icon: 'https://www.bilibili.com/favicon.ico' },
+        { id: '3', title: '微信读书', url: 'https://weread.qq.com', icon: 'https://weread.qq.com/favicon.ico' },
+        { id: '4', title: '知乎', url: 'https://www.zhihu.com', icon: 'https://static.zhihu.com/heifetz/favicon.ico' },
+      ],
+    },
+    life: {
+      title: '生活出行',
+      items: [
+        { id: '1', title: '高德地图', url: 'https://amap.com', icon: 'https://amap.com/favicon.ico' },
+        { id: '2', title: '铁路12306', url: 'https://www.12306.cn', icon: 'https://www.12306.cn/favicon.ico' },
+        { id: '3', title: '大众点评', url: 'https://www.dianping.com', icon: 'https://www.dianping.com/favicon.ico' },
+        { id: '4', title: '美团', url: 'https://www.meituan.com', icon: 'https://www.meituan.com/favicon.ico' },
+      ],
+    },
+    media: {
+      title: '影音娱乐',
+      items: [
+        { id: '1', title: '哔哩哔哩', url: 'https://www.bilibili.com', icon: 'https://www.bilibili.com/favicon.ico' },
+        { id: '2', title: '网易云音乐', url: 'https://music.163.com', icon: 'https://music.163.com/favicon.ico' },
+        { id: '3', title: '少数派', url: 'https://sspai.com', icon: 'https://sspai.com/favicon.ico' },
+        { id: '4', title: '豆瓣', url: 'https://www.douban.com', icon: 'https://www.douban.com/favicon.ico' },
+      ],
+    },
+    dev: {
+      title: '开发技术',
+      items: [
+        { id: '1', title: 'GitHub', url: 'https://github.com', icon: 'https://github.githubassets.com/favicons/favicon.svg' },
+        { id: '2', title: '掘金', url: 'https://juejin.cn', icon: 'https://lf3-cdn-tos.bytescm.com/obj/static/xitu_juejin_web/static/favicons/favicon.ico' },
+        { id: '3', title: 'V2EX', url: 'https://v2ex.com', icon: 'https://v2ex.com/favicon.ico' },
+        { id: '4', title: 'Stack Overflow', url: 'https://stackoverflow.com', icon: 'https://stackoverflow.com/favicon.ico' },
+      ],
+    },
+  };
+
   // 倒数日特定输入字段
   const [countdownTitle, setCountdownTitle] = useState('元旦跨年');
+
   const [countdownDate, setCountdownDate] = useState(() => `${new Date().getFullYear() + 1}-01-01`);
 
   // GitHub 特定输入字段
@@ -291,7 +338,14 @@ export const AddWidgetModal: React.FC<AddWidgetModalProps> = ({
         url: bookmarkUrl.trim().startsWith('http') ? bookmarkUrl.trim() : 'https://' + (bookmarkUrl.trim() || 'github.com'),
         icon: bookmarkIcon.trim() || undefined,
       };
+    } else if (activeStrategy.type === 'folder') {
+      const presetData = FOLDER_PRESETS[folderPreset] || FOLDER_PRESETS.featured;
+      config = {
+        title: folderTitle.trim() || presetData.title,
+        items: presetData.items,
+      };
     } else if (activeStrategy.type === 'weather') {
+
       config = {
         city: weatherCity.trim() || '厦门',
         autoLocation: true,
@@ -495,6 +549,66 @@ export const AddWidgetModal: React.FC<AddWidgetModalProps> = ({
                     className="flex-1 px-3.5 py-2.5 rounded-xl bg-white/[0.06] hover:bg-white/[0.09] focus:bg-white/[0.12] text-sm text-white placeholder-white/25 focus:outline-none transition-colors border-none"
                   />
                 </div>
+              </div>
+            </div>
+          )}
+
+
+          {activeStrategy?.type === 'folder' && (
+            <div className="space-y-3 pt-1">
+              <div className="space-y-1">
+                <label className="text-xs text-white/70 font-medium">文件夹名称</label>
+                <input
+                  type="text"
+                  value={folderTitle}
+                  onChange={(e) => setFolderTitle(e.target.value)}
+                  placeholder="如：常用应用、生活、影音娱乐"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-white/[0.06] hover:bg-white/[0.09] focus:bg-white/[0.12] text-sm text-white placeholder-white/25 focus:outline-none transition-colors border-none"
+                />
+              </div>
+
+              <div className="space-y-1.5">
+                <label className="text-xs text-white/70 font-medium">选择预设模板</label>
+                <div className="grid grid-cols-2 gap-2">
+                  {[
+                    { key: 'featured', name: '常用精选', desc: 'GitHub, B站, 微信读书, 知乎' },
+                    { key: 'life', name: '生活出行', desc: '高德地图, 12306, 点评, 美团' },
+                    { key: 'media', name: '影音娱乐', desc: 'B站, 网易云, 少数派, 豆瓣' },
+                    { key: 'dev', name: '开发技术', desc: 'GitHub, 掘金, V2EX, StackOverflow' },
+                  ].map((preset) => {
+                    const isCurrent = folderPreset === preset.key;
+                    return (
+                      <button
+                        key={preset.key}
+                        type="button"
+                        onClick={() => {
+                          setFolderPreset(preset.key as any);
+                          setFolderTitle(FOLDER_PRESETS[preset.key].title);
+                        }}
+                        className={`p-2.5 rounded-xl border text-left transition-all cursor-pointer ${
+                          isCurrent
+                            ? 'bg-orange-500/15 border-orange-500/50 shadow-sm'
+                            : 'bg-white/[0.04] border-white/[0.06] hover:bg-white/[0.08]'
+                        }`}
+                      >
+                        <div
+                          className={`text-xs font-semibold ${
+                            isCurrent ? 'text-orange-400' : 'text-white/90'
+                          }`}
+                        >
+                          {preset.name}
+                        </div>
+                        <div className="text-[10px] text-white/45 truncate mt-0.5">
+                          {preset.desc}
+                        </div>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              <div className="text-[11px] text-white/45 bg-white/[0.03] p-2.5 rounded-xl border border-white/[0.04] leading-relaxed">
+                💡 文件夹支持 2x2 (3x3 九宫格，最多 9 个应用，可不填满)、2x1 (双格横排)、1x2 (双格竖排) 以及 1x1。点击内部图标直接跳转，桌面右键文件夹可随时管理与排序。
               </div>
             </div>
           )}

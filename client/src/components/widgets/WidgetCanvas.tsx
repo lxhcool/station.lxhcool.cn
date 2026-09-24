@@ -12,7 +12,11 @@ import {
   Copy01Icon,
   Menu01Icon,
   Tick02Icon,
+  Folder01Icon,
 } from 'hugeicons-react';
+import { FolderEditModal } from '../../widgets/folder/FolderEditModal';
+import { FolderConfig } from '../../widgets/folder';
+
 
 // 兼容 ESM / CJS 的 GridLayout 组件引用
 const GridLayout = (RGL as any).default || RGL;
@@ -62,6 +66,19 @@ export const WidgetCanvas: React.FC<WidgetCanvasProps> = ({
   const [isEditing, setIsEditing] = useState(false);
   const [contextMenu, setContextMenu] = useState<ContextMenuState | null>(null);
   const [copiedId, setCopiedId] = useState<string | null>(null);
+  const [editingFolder, setEditingFolder] = useState<WidgetInstance<FolderConfig> | null>(null);
+
+  // 监听文件夹点击添加或触发编辑事件
+  useEffect(() => {
+    const handleOpenFolder = (e: any) => {
+      const target = widgets.find((w) => w.id === e.detail?.id);
+      if (target && target.type === 'folder') {
+        setEditingFolder(target as WidgetInstance<FolderConfig>);
+      }
+    };
+    window.addEventListener('open-folder-edit' as any, handleOpenFolder);
+    return () => window.removeEventListener('open-folder-edit' as any, handleOpenFolder);
+  }, [widgets]);
 
   // 容器响应式宽度与列数计算 (单元格固定 68px，间距 14px，步长 82px)
   const [screenWidth, setScreenWidth] = useState(() =>
@@ -459,13 +476,43 @@ export const WidgetCanvas: React.FC<WidgetCanvasProps> = ({
             }}
             onRemove={() => handleRemove(contextMenu.instance.id)}
             onCopy={(url) => handleCopy(url, contextMenu.instance.id)}
+            onEditFolder={(instance) => setEditingFolder(instance)}
             onClose={() => setContextMenu(null)}
           />
         )}
       </AnimatePresence>
+
+      {/* 文件夹编辑弹窗 */}
+      {editingFolder && (
+        <FolderEditModal
+          isOpen={!!editingFolder}
+          folderTitle={editingFolder.config?.title || '文件夹'}
+          items={editingFolder.config?.items || []}
+          maxItems={
+            editingFolder.size === '2x2'
+              ? 9
+              : editingFolder.size === '2x1'
+              ? 4
+              : editingFolder.size === '1x2'
+              ? 3
+              : 4
+          }
+          onSave={(newCfg) => {
+            onUpdateWidgets(
+              widgets.map((w) =>
+                w.id === editingFolder.id
+                  ? { ...w, config: { ...w.config, ...newCfg } }
+                  : w
+              )
+            );
+          }}
+          onClose={() => setEditingFolder(null)}
+        />
+      )}
     </div>
   );
 };
+
 
 interface WidgetContextMenuProps {
   menuState: ContextMenuState;
@@ -474,6 +521,7 @@ interface WidgetContextMenuProps {
   onEnterEditMode: () => void;
   onRemove: () => void;
   onCopy: (url: string) => void;
+  onEditFolder?: (instance: WidgetInstance<FolderConfig>) => void;
   onClose: () => void;
 }
 
@@ -484,6 +532,7 @@ const WidgetContextMenu: React.FC<WidgetContextMenuProps> = ({
   onEnterEditMode,
   onRemove,
   onCopy,
+  onEditFolder,
   onClose,
 }) => {
   const strategy = widgetRegistry.get(menuState.instance.type);
@@ -496,6 +545,7 @@ const WidgetContextMenu: React.FC<WidgetContextMenuProps> = ({
 
   const isBookmark = menuState.instance.type === 'bookmark';
   const bookmarkUrl = menuState.instance.config?.url;
+  const isFolder = menuState.instance.type === 'folder';
 
   return (
     <div
@@ -515,8 +565,28 @@ const WidgetContextMenu: React.FC<WidgetContextMenuProps> = ({
         onClick={(e) => e.stopPropagation()}
         className="fixed z-50 w-[168px] p-1.5 rounded-[16px] modal-card-glow text-white select-none"
       >
+        {/* 文件夹专属操作 */}
+        {isFolder && (
+          <>
+            <div className="space-y-0.5">
+              <button
+                onClick={() => {
+                  onEditFolder?.(menuState.instance as WidgetInstance<FolderConfig>);
+                  onClose();
+                }}
+                className="w-full h-8 flex items-center gap-2.5 px-2.5 rounded-[10px] text-[13px] text-white/90 hover:text-white hover:bg-white/[0.12] transition-colors cursor-pointer text-left"
+              >
+                <Folder01Icon size={14} className="text-white/50 flex-shrink-0" />
+                <span className="truncate">编辑文件夹</span>
+              </button>
+            </div>
+            <div className="h-[1px] bg-white/[0.04] my-1 mx-2" />
+          </>
+        )}
+
         {/* 书签专属操作 */}
         {isBookmark && bookmarkUrl && (
+
           <>
             <div className="space-y-0.5">
               <button

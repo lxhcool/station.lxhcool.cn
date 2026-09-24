@@ -21,12 +21,31 @@ export const DEFAULT_WIDGETS: WidgetInstance[] = [
   { id: 'w_weather', type: 'weather', size: '2x2', config: { city: '厦门' } },
   { id: 'w_calendar', type: 'calendar', size: '2x2', config: { showLunar: true } },
   { id: 'w_github', type: 'github', size: '4x2', config: { username: 'lxhcool' } },
+  {
+    id: 'w_folder_life',
+    type: 'folder',
+    size: '2x2',
+    config: {
+      title: '生活',
+      items: [
+        { id: 'f_1', title: '高德地图', url: 'https://amap.com', icon: 'https://amap.com/favicon.ico' },
+        { id: 'f_2', title: '铁路12306', url: 'https://www.12306.cn', icon: 'https://www.12306.cn/favicon.ico' },
+        { id: 'f_3', title: '微信读书', url: 'https://weread.qq.com', icon: 'https://weread.qq.com/favicon.ico' },
+        { id: 'f_4', title: '哔哩哔哩', url: 'https://www.bilibili.com', icon: 'https://www.bilibili.com/favicon.ico' },
+        { id: 'f_5', title: '知乎', url: 'https://www.zhihu.com', icon: 'https://static.zhihu.com/heifetz/favicon.ico' },
+        { id: 'f_6', title: '网易云', url: 'https://music.163.com', icon: 'https://music.163.com/favicon.ico' },
+        { id: 'f_7', title: 'GitHub', url: 'https://github.com', icon: 'https://github.githubassets.com/favicons/favicon.svg' },
+        { id: 'f_8', title: '少数派', url: 'https://sspai.com', icon: 'https://sspai.com/favicon.ico' },
+      ],
+    },
+  },
   { id: 'bm_1', type: 'bookmark', size: '1x1', config: { title: 'GitHub', url: 'https://github.com', icon: 'https://github.githubassets.com/favicons/favicon.svg' } },
   { id: 'bm_2', type: 'bookmark', size: '1x1', config: { title: 'Bilibili', url: 'https://www.bilibili.com', icon: 'https://www.bilibili.com/favicon.ico' } },
   { id: 'bm_3', type: 'bookmark', size: '1x1', config: { title: '知乎', url: 'https://www.zhihu.com', icon: 'https://static.zhihu.com/heifetz/favicon.ico' } },
   { id: 'bm_4', type: 'bookmark', size: '1x1', config: { title: 'YouTube', url: 'https://www.youtube.com', icon: 'https://www.youtube.com/s/desktop/f67596ff/img/favicon_144x144.png' } },
   { id: 'bm_5', type: 'bookmark', size: '1x1', config: { title: 'Notion', url: 'https://www.notion.so', icon: 'https://www.notion.so/front-static/favicon.ico' } },
 ];
+
 
 export const DEFAULT_PREFERENCES: UserPreferences = {
   version: 2,

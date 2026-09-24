@@ -8,9 +8,11 @@ import { countdownStrategy } from './countdown';
 import { quoteStrategy } from './quote';
 import { githubStrategy } from './github';
 import { playerStrategy } from './player';
+import { folderStrategy } from './folder';
 
 export function initializeWidgets() {
   widgetRegistry.register(bookmarkStrategy);
+  widgetRegistry.register(folderStrategy);
   widgetRegistry.register(weatherStrategy);
   widgetRegistry.register(calendarStrategy);
   widgetRegistry.register(hotboardStrategy);
@@ -22,6 +24,7 @@ export function initializeWidgets() {
 }
 
 export * from './bookmark';
+export * from './folder';
 export * from './weather';
 export * from './calendar';
 export * from './hotboard';
@@ -30,3 +33,4 @@ export * from './countdown';
 export * from './quote';
 export * from './github';
 export * from './player';
+
